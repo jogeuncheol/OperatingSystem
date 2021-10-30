@@ -19,6 +19,9 @@ void	*ft_scheduler(void *data)
 	share_data = (t_data *)data;
 	while (1)
 	{
+		if (share_data->whois_die == 1)
+			break;
 		share_data->flow_time = ft_get_time() - share_data->start_time;
 	}
+	return (NULL);
 }

@@ -5,20 +5,20 @@ void	ft_take_fork(t_philo *philo)
 	t_data	*share_data;
 
 	share_data = philo->data;
-	if (philo->p_id % 2 == 0)
+//	if (philo->p_id % 2 == 0)
 	{
 		pthread_mutex_lock(&(share_data->fork[philo->L_fork]));
 		printf("[%ld] %d : has taken a L_fork\n", share_data->flow_time, philo->p_id);
 		pthread_mutex_lock(&(share_data->fork[philo->R_fork]));
 		printf("[%ld] %d : has taken a R_fork\n", share_data->flow_time, philo->p_id);
 	}
-	else
+/*	else
 	{
 		pthread_mutex_lock(&(share_data->fork[philo->R_fork]));
 		printf("[%ld] %d : has taken a R_fork\n", share_data->flow_time, philo->p_id);
 		pthread_mutex_lock(&(share_data->fork[philo->L_fork]));
 		printf("[%ld] %d : has taken a L_fork\n", share_data->flow_time, philo->p_id);
-	}
+	}*/
 //	printf("[%d] %d : has taken a fork\n", philo->flow_time, philo->p_id);
 }
 

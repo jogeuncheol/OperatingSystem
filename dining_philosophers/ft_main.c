@@ -7,6 +7,7 @@ void	*ft_job(void *data)
 
 	philo = (t_philo *)data;
 	share_data = philo->data;
+	share_data->flow_time = 0;
 /*	printf("%d : share_data->ttd : %d\n", philo->p_id, share_data->ttd);
 	printf("%d : share_data->nop : %d\n", philo->p_id, share_data->nop);
 	printf("%d : philo->L_fork : %d\n", philo->p_id, philo->L_fork);
@@ -62,6 +63,7 @@ int	ft_create_thread(t_data *share_data, t_philo *philo)
 		pth_id = pthread_create(&thread[i], NULL, ft_job, (void *)&philo[i]);
 		if (pth_id < 0)
 			return (1);
+		usleep(100); // <--
 	}
 	ft_join_thread(thread, share_data->nop);
 	return (0);

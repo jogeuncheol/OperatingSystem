@@ -9,6 +9,8 @@ void	ft_init_philo(int i, t_data *share_data, t_philo *philo)
 		philo->is_eatAll = 0;
 	else
 		philo->is_eatAll = -1;
+	philo->is_eat = 0;
+	philo->is_die = 0;
 	philo->flow_time = 0;
 	philo->data = share_data;
 }
@@ -39,6 +41,7 @@ int	ft_init(int argc, char *argv[], t_data **share_data, t_philo **philo)
 	(*share_data)->tts = atoi(argv[4]);
 	if (argc == 6)
 		(*share_data)->must_eat = atoi(argv[5]);
+	(*share_data)->whois_die = 0;
 	(*share_data)->philo = malloc(sizeof(t_philo) * (*share_data)->nop);
 	if ((*share_data)->philo == NULL)
 		return (1);

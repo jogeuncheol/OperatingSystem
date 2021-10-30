@@ -12,6 +12,7 @@ typedef struct s_philo
 	int		p_id;
 	int		L_fork;
 	int		R_fork;
+	int		is_eat;
 	int		is_eatAll;
 	int		flow_time;
 	int		is_die;
@@ -25,6 +26,7 @@ typedef struct s_data
 	int				tte;
 	int				tts;
 	int				must_eat;
+	int				whois_die;
 	long			start_time;
 	long			flow_time;
 	pthread_mutex_t	*fork;
