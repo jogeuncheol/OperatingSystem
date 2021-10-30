@@ -5,6 +5,7 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include <pthread.h>
+# include <sys/time.h>
 
 typedef struct s_philo
 {
@@ -13,6 +14,7 @@ typedef struct s_philo
 	int		R_fork;
 	int		is_eatAll;
 	int		flow_time;
+	int		is_die;
 	struct	s_data *data;
 }	t_philo;
 
@@ -23,6 +25,8 @@ typedef struct s_data
 	int				tte;
 	int				tts;
 	int				must_eat;
+	long			start_time;
+	long			flow_time;
 	pthread_mutex_t	*fork;
 	t_philo			*philo;
 }	t_data;
@@ -33,5 +37,8 @@ void	ft_take_fork(t_philo *philo);
 void	ft_eat(t_philo *philo);
 void	ft_drop_fork(t_philo *philo);
 void	ft_sleep(t_philo *philo);
+void	ft_think(t_philo *philo);
+void	*ft_scheduler(void *data);
+long	ft_get_time();
 
 #endif

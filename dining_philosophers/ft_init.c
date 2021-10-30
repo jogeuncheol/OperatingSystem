@@ -13,16 +13,18 @@ void	ft_init_philo(int i, t_data *share_data, t_philo *philo)
 	philo->data = share_data;
 }
 
-void	ft_init_mutex(t_data *share_data)
+int	ft_init_mutex(t_data *share_data)
 {
 	int i;
 
 	i = 0;
 	while (i < share_data->nop)
 	{
-		pthread_mutex_init(&(share_data->fork[i]), NULL);
+		if (pthread_mutex_init(&(share_data->fork[i]), NULL) != 0)
+			return (2);
 		i++;
 	}
+	return (0);
 }
 
 // nop, ttd, tte, tts, must_eat 초기화.
