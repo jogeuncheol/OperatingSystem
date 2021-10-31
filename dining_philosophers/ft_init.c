@@ -12,6 +12,7 @@ void	ft_init_philo(int i, t_data *share_data, t_philo *philo)
 	philo->is_eat = 0;
 	philo->is_die = 0;
 	philo->flow_time = 0;
+	philo->last_eat = 0;
 	philo->data = share_data;
 }
 

@@ -7,12 +7,12 @@ void	*ft_job(void *data)
 
 	philo = (t_philo *)data;
 	share_data = philo->data;
-	share_data->flow_time = 0;
+//	share_data->flow_time = 0;
 /*	printf("%d : share_data->ttd : %d\n", philo->p_id, share_data->ttd);
 	printf("%d : share_data->nop : %d\n", philo->p_id, share_data->nop);
 	printf("%d : philo->L_fork : %d\n", philo->p_id, philo->L_fork);
 	printf("%d : philo->R_fork : %d\n", philo->p_id, philo->R_fork);*/
-	while (1)
+	while (!share_data->whois_die)
 	{
 		ft_take_fork(philo);
 		ft_eat(philo);
@@ -20,6 +20,7 @@ void	*ft_job(void *data)
 		ft_sleep(philo);
 		ft_think(philo);
 	}
+	return (NULL);
 }
 
 void	ft_join_thread(pthread_t *thread, int nop)

@@ -8,9 +8,9 @@ void	ft_take_fork(t_philo *philo)
 //	if (philo->p_id % 2 == 0)
 	{
 		pthread_mutex_lock(&(share_data->fork[philo->L_fork]));
-		printf("[%ld] %d : has taken a L_fork\n", share_data->flow_time, philo->p_id);
+//		printf("[%ld] %d : has taken a L_fork\n", share_data->flow_time, philo->p_id);
 		pthread_mutex_lock(&(share_data->fork[philo->R_fork]));
-		printf("[%ld] %d : has taken a R_fork\n", share_data->flow_time, philo->p_id);
+		printf("%ld %d has taken a fork\n", share_data->flow_time, philo->p_id);
 	}
 /*	else
 	{
@@ -27,9 +27,16 @@ void	ft_eat(t_philo *philo)
 	t_data	*share_data;
 
 	share_data = philo->data;
-	printf("[%ld] %d : is eating\n", share_data->flow_time, philo->p_id);
+	if (share_data->flow_time - philo->last_eat > share_data->ttd)
+	{
+		printf("%ld %d is died\n", share_data->flow_time, philo->p_id);
+		exit(0);
+	}
+	printf("%ld %d is eating\n", share_data->flow_time, philo->p_id);
 	philo->flow_time += share_data->tte;
 	usleep(share_data->tte * 1000);
+	philo->is_eat++;
+	philo->last_eat = share_data->flow_time;
 }
 
 void	ft_drop_fork(t_philo *philo)
@@ -37,7 +44,7 @@ void	ft_drop_fork(t_philo *philo)
 	t_data	*share_data;
 
 	share_data = philo->data;
-	printf("[%ld] %d : drop fork\n", share_data->flow_time, philo->p_id);
+//	printf("[%ld] %d : drop fork\n", share_data->flow_time, philo->p_id);
 	pthread_mutex_unlock(&share_data->fork[philo->R_fork]);
 	pthread_mutex_unlock(&share_data->fork[philo->L_fork]);
 }
@@ -47,7 +54,7 @@ void	ft_sleep(t_philo *philo)
 	t_data	*share_data;
 
 	share_data = philo->data;
-	printf("[%ld] %d : is sleeping\n", share_data->flow_time, philo->p_id);
+	printf("%ld %d is sleeping\n", share_data->flow_time, philo->p_id);
 	philo->flow_time += share_data->tts;
 	usleep(share_data->tts * 1000);
 }
@@ -57,5 +64,5 @@ void	ft_think(t_philo *philo)
 	t_data	*share_data;
 
 	share_data = philo->data;
-	printf("[%ld] %d : is thinking\n", share_data->flow_time, philo->p_id);
+	printf("%ld %d is thinking\n", share_data->flow_time, philo->p_id);
 }
