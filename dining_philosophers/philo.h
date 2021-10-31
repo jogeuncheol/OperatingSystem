@@ -30,6 +30,7 @@ typedef struct s_data
 	int				whois_die;
 	long			start_time;
 	long			flow_time;
+	long			*last_eat_table;
 	pthread_mutex_t	*fork;
 	t_philo			*philo;
 }	t_data;
@@ -43,5 +44,6 @@ void	ft_sleep(t_philo *philo);
 void	ft_think(t_philo *philo);
 void	*ft_scheduler(void *data);
 long	ft_get_time();
+void	ft_free(t_data *share_data, pthread_t *thread);
 
 #endif

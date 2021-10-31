@@ -30,6 +30,22 @@ int	ft_init_mutex(t_data *share_data)
 	return (0);
 }
 
+int	ft_init_eating_table(t_data *share_data)
+{
+	int i;
+
+	share_data->last_eat_table = malloc(sizeof(long) * share_data->nop);
+	if (share_data->last_eat_table == NULL)
+		return (1);
+	i = 0;
+	while (i < share_data->nop)
+	{
+		share_data->last_eat_table[i] = 0;
+		i++;
+	}
+	return (0);
+}
+
 // nop, ttd, tte, tts, must_eat 초기화.
 int	ft_init(int argc, char *argv[], t_data **share_data, t_philo **philo)
 {
@@ -50,6 +66,7 @@ int	ft_init(int argc, char *argv[], t_data **share_data, t_philo **philo)
 	(*share_data)->fork = malloc(sizeof(pthread_mutex_t) * (*share_data)->nop);
 	if ((*share_data)->fork == NULL)
 		return (1);
+	ft_init_eating_table(*share_data);
 	ft_init_mutex(*share_data);
 	return (0);
 }

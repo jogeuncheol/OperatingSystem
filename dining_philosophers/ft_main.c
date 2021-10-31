@@ -29,7 +29,7 @@ void	ft_join_thread(pthread_t *thread, int nop)
 
 	i = 0;
 	while (i < nop + 1)
-		pthread_join(thread[i++], NULL);
+		pthread_detach(thread[i++]);
 }
 
 int	ft_create_scheduler(pthread_t *thread, t_data *share_data)
@@ -43,7 +43,7 @@ int	ft_create_scheduler(pthread_t *thread, t_data *share_data)
 	return (0);
 }
 
-int	ft_create_thread(t_data *share_data, t_philo *philo)
+int	ft_create_thread(t_data *share_data, t_philo *philo, pthread_t **pth)
 {
 	pthread_t	*thread;
 	int			pth_id;
@@ -66,14 +66,16 @@ int	ft_create_thread(t_data *share_data, t_philo *philo)
 			return (1);
 		usleep(100); // <--
 	}
+	*pth = thread;
 	ft_join_thread(thread, share_data->nop);
 	return (0);
 }
 
 int	main(int argc, char *argv[])
 {
-	t_data	*share_data;
-	t_philo	*philo;
+	pthread_t	*thread;
+	t_data		*share_data;
+	t_philo		*philo;
 
 	if (argc < 5 || argc > 6)
 	{
@@ -81,9 +83,13 @@ int	main(int argc, char *argv[])
 		return (1);
 	}
 	ft_init(argc, argv, &share_data, &philo);
-	if (ft_create_thread(share_data, philo) == 1)
-		;
+	if (ft_create_thread(share_data, philo, &thread) == 1)
+	{
 //		ft_error();
-//	ft_free_data();
+	}
+	while (!(share_data->whois_die))
+	{
+	}
+	ft_free(share_data, thread);
 	return (0);
 }

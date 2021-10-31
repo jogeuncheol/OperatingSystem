@@ -12,6 +12,23 @@ long	ft_get_time()
 	return ((time.tv_sec * 1000) + (time.tv_usec / 1000));
 }
 
+int		ft_died_check(t_data *share_data)
+{
+	int i;
+
+	i = 0;
+	while (i < share_data->nop)
+	{
+		if (share_data->flow_time - share_data->last_eat_table[i] > share_data->ttd)
+		{
+			printf("%ld %d is died\n", share_data->flow_time, i + 1);
+			return (1);
+		}
+		i++;
+	}
+	return (0);
+}
+
 void	*ft_scheduler(void *data)
 {
 	t_data *share_data;
@@ -22,6 +39,9 @@ void	*ft_scheduler(void *data)
 		if (share_data->whois_die == 1)
 			break;
 		share_data->flow_time = ft_get_time() - share_data->start_time;
+		if (ft_died_check(share_data))
+			break ;
 	}
+	share_data->whois_die = 1; // <-- need check
 	return (NULL);
 }
