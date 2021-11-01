@@ -28,8 +28,8 @@ void	ft_join_thread(pthread_t *thread, int nop)
 	int	i;
 
 	i = 0;
-	while (i < nop + 1)
-		pthread_detach(thread[i++]);
+	while (i < nop)
+		pthread_join(thread[i++], NULL);
 }
 
 int	ft_create_scheduler(pthread_t *thread, t_data *share_data)

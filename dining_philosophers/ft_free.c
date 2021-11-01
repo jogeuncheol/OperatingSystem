@@ -16,6 +16,8 @@ void	ft_free(t_data *share_data, pthread_t *thread)
 	share_data->philo = NULL;
 	free(share_data->last_eat_table);
 	share_data->last_eat_table = NULL;
+	free(share_data);
+	share_data = NULL;
 	free(thread);
 	thread = NULL;
 }

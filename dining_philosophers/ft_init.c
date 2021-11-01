@@ -59,6 +59,7 @@ int	ft_init(int argc, char *argv[], t_data **share_data, t_philo **philo)
 	if (argc == 6)
 		(*share_data)->must_eat = atoi(argv[5]);
 	(*share_data)->whois_die = 0;
+	(*share_data)->start_time = ft_get_time();
 	(*share_data)->philo = malloc(sizeof(t_philo) * (*share_data)->nop);
 	if ((*share_data)->philo == NULL)
 		return (1);
