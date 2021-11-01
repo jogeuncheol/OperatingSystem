@@ -12,6 +12,18 @@ long	ft_get_time()
 	return ((time.tv_sec * 1000) + (time.tv_usec / 1000));
 }
 
+void	ft_wsleep(int time_to)
+{
+	int i;
+
+	i = 0;
+	while (i < time_to)
+	{
+		usleep(1000);
+		i++;
+	}
+}
+
 int		ft_died_check(t_data *share_data)
 {
 	int i;
@@ -35,6 +47,7 @@ void	*ft_scheduler(void *data)
 	t_data *share_data;
 
 	share_data = (t_data *)data;
+	share_data->start_time = ft_get_time();
 	while (1)
 	{
 		if (share_data->whois_die)

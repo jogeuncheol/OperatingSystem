@@ -44,6 +44,7 @@ void	ft_sleep(t_philo *philo);
 void	ft_think(t_philo *philo);
 void	*ft_scheduler(void *data);
 long	ft_get_time();
+void	ft_wsleep(int time_to);
 void	ft_free(t_data *share_data, pthread_t *thread);
 
 #endif

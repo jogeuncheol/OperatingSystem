@@ -8,10 +8,6 @@ void	*ft_job(void *data)
 	philo = (t_philo *)data;
 	share_data = philo->data;
 //	share_data->flow_time = 0;
-/*	printf("%d : share_data->ttd : %d\n", philo->p_id, share_data->ttd);
-	printf("%d : share_data->nop : %d\n", philo->p_id, share_data->nop);
-	printf("%d : philo->L_fork : %d\n", philo->p_id, philo->L_fork);
-	printf("%d : philo->R_fork : %d\n", philo->p_id, philo->R_fork);*/
 	while (!share_data->whois_die)
 	{
 		ft_take_fork(philo);
@@ -28,7 +24,7 @@ void	ft_join_thread(pthread_t *thread, int nop)
 	int	i;
 
 	i = 0;
-	while (i < nop)
+	while (i < nop + 1)
 		pthread_join(thread[i++], NULL);
 }
 
@@ -59,12 +55,15 @@ int	ft_create_thread(t_data *share_data, t_philo *philo, pthread_t **pth)
 		return (1);
 	i = -1;
 	while (++i < share_data->nop)
-	{
 		ft_init_philo(i, share_data, &philo[i]);
+	i = -1;
+	while (++i < share_data->nop)
+	{
+//		ft_init_philo(i, share_data, &philo[i]);
 		pth_id = pthread_create(&thread[i], NULL, ft_job, (void *)&philo[i]);
 		if (pth_id < 0)
 			return (1);
-		usleep(100); // <--
+		usleep(10); // <--
 	}
 	*pth = thread;
 	ft_join_thread(thread, share_data->nop);
