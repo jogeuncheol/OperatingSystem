@@ -35,6 +35,7 @@ int	ft_create_scheduler(pthread_t *thread, t_data *share_data)
 	pth_id = pthread_create(thread, NULL, ft_scheduler, (void *)share_data);
 	if (pth_id < 0)
 		return (1);
+//	pthread_join(*thread, NULL);
 	share_data->start_time = ft_get_time();
 	return (0);
 }
@@ -63,6 +64,7 @@ int	ft_create_thread(t_data *share_data, t_philo *philo, pthread_t **pth)
 		pth_id = pthread_create(&thread[i], NULL, ft_job, (void *)&philo[i]);
 		if (pth_id < 0)
 			return (1);
+//		pthread_detach(thread[i]);
 		usleep(10); // <--
 	}
 	*pth = thread;
