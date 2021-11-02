@@ -27,6 +27,8 @@ int	ft_init_mutex(t_data *share_data)
 			return (2);
 		i++;
 	}
+	if (pthread_mutex_init(&share_data->mutex_eat_all, NULL) != 0)
+		return (2);
 	return (0);
 }
 

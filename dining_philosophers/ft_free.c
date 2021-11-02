@@ -10,6 +10,7 @@ void	ft_free(t_data *share_data, pthread_t *thread)
 		pthread_mutex_destroy(&(share_data->fork[i]));
 		i++;
 	}
+	pthread_mutex_destroy(&share_data->mutex_eat_all);
 	free(share_data->fork);
 	share_data->fork = NULL;
 	free(share_data->philo);

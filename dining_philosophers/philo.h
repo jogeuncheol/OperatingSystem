@@ -32,6 +32,7 @@ typedef struct s_data
 	long			flow_time;
 	long			*last_eat_table;
 	int				is_eat_all;
+	pthread_mutex_t	mutex_eat_all;
 	pthread_mutex_t	*fork;
 	t_philo			*philo;
 }	t_data;

@@ -40,7 +40,11 @@ void	ft_eat(t_philo *philo)
 	share_data->last_eat_table[philo->p_id] += share_data->flow_time - share_data->tte;
 	philo->is_eat++;
 	if (share_data->must_eat > 0 && philo->is_eat == share_data->must_eat)
+	{
+		pthread_mutex_lock(&share_data->mutex_eat_all);
 		share_data->is_eat_all++;
+		pthread_mutex_unlock(&share_data->mutex_eat_all);
+	}
 //	philo->last_eat = share_data->flow_time;
 }
 
