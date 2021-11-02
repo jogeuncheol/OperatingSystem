@@ -39,6 +39,8 @@ void	ft_eat(t_philo *philo)
 	usleep(share_data->tte * 1000);
 	share_data->last_eat_table[philo->p_id] += share_data->flow_time - share_data->tte;
 	philo->is_eat++;
+	if (share_data->must_eat > 0 && philo->is_eat == share_data->must_eat)
+		share_data->is_eat_all++;
 //	philo->last_eat = share_data->flow_time;
 }
 

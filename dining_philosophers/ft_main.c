@@ -8,7 +8,7 @@ void	*ft_job(void *data)
 	philo = (t_philo *)data;
 	share_data = philo->data;
 //	share_data->flow_time = 0;
-	while (!share_data->whois_die)
+	while (!share_data->whois_die && share_data->is_eat_all != share_data->nop)
 	{
 		ft_take_fork(philo);
 		ft_eat(philo);
@@ -88,7 +88,7 @@ int	main(int argc, char *argv[])
 	{
 //		ft_error();
 	}
-	while (!(share_data->whois_die))
+	while (!(share_data->whois_die) && share_data->is_eat_all != share_data->nop)
 	{
 	}
 	if (share_data->whois_die)

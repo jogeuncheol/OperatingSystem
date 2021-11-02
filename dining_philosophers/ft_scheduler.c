@@ -44,13 +44,13 @@ int		ft_died_check(t_data *share_data)
 
 void	*ft_scheduler(void *data)
 {
-	t_data *share_data;
+	t_data	*share_data;
 
 	share_data = (t_data *)data;
 	share_data->start_time = ft_get_time();
 	while (1)
 	{
-		if (share_data->whois_die)
+		if (share_data->whois_die || share_data->is_eat_all == share_data->nop)
 			break ;
 		share_data->flow_time = ft_get_time() - share_data->start_time;
 		if (ft_died_check(share_data))
