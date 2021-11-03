@@ -7,7 +7,6 @@ void	*ft_job(void *data)
 
 	philo = (t_philo *)data;
 	share_data = philo->data;
-//	share_data->flow_time = 0;
 	while (!share_data->whois_die && share_data->is_eat_all != share_data->nop)
 	{
 		ft_take_fork(philo);
@@ -65,7 +64,7 @@ int	ft_create_thread(t_data *share_data, t_philo *philo, pthread_t **pth)
 		if (pth_id < 0)
 			return (1);
 //		pthread_detach(thread[i]);
-		usleep(10); // <--
+//		usleep(0); // <--
 	}
 	*pth = thread;
 	ft_join_thread(thread, share_data->nop);
@@ -88,9 +87,9 @@ int	main(int argc, char *argv[])
 	{
 //		ft_error();
 	}
-	while (!(share_data->whois_die) && share_data->is_eat_all != share_data->nop)
-	{
-	}
+//	while (!(share_data->whois_die) && share_data->is_eat_all != share_data->nop)
+//	{
+//	}
 	if (share_data->whois_die)
 		printf("%ld %d is died\n", share_data->flow_time, share_data->whois_die);
 	ft_free(share_data, thread);
