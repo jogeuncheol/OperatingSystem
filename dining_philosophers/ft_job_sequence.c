@@ -4,7 +4,8 @@ void	ft_take_fork(t_philo *philo)
 {
 	pthread_mutex_lock(&(philo->data->fork[philo->L_fork]));
 	pthread_mutex_lock(&(philo->data->fork[philo->R_fork]));
-	printf("%ld %d has taken a fork\n", philo->data->flow_time, philo->p_id + 1);
+	if (!philo->data->whois_die)
+		printf("%ld %d has taken a fork\n", philo->data->flow_time, philo->p_id + 1);
 }
 
 void	ft_eat(t_philo *philo)
@@ -16,11 +17,19 @@ void	ft_eat(t_philo *philo)
 		printf("%ld %d is died\n", share_data->flow_time, philo->p_id);
 		exit(0);
 	}*/
-	printf("%ld %d is eating\n", philo->data->flow_time, philo->p_id + 1);
+	if (!philo->data->whois_die)
+		printf("%ld %d is eating\n", philo->data->flow_time, philo->p_id + 1);
 	philo->flow_time += philo->data->tte;
-	long s_time = ft_get_time();
-	while (ft_get_time() - s_time < philo->data->tte)
+//	long s_time = ft_get_time();
+	while (philo->data->flow_time - philo->last_eat < philo->data->tte)
+	{
+		if (philo->data->whois_die)
+		{
+			ft_drop_fork(philo);
+			return ;
+		}
 		usleep(philo->data->tte / 2);
+	}
 //	usleep(philo->data->tte * 1000);
 //	share_data->last_eat_table[philo->p_id] += share_data->flow_time - share_data->tte;
 	philo->is_eat++;
@@ -41,12 +50,14 @@ void	ft_drop_fork(t_philo *philo)
 
 void	ft_sleep(t_philo *philo)
 {
-	printf("%ld %d is sleeping\n", philo->data->flow_time, philo->p_id + 1);
+	if (!philo->data->whois_die)
+		printf("%ld %d is sleeping\n", philo->data->flow_time, philo->p_id + 1);
 	philo->flow_time += philo->data->tts;
 	usleep(philo->data->tts * 1000);
 }
 
 void	ft_think(t_philo *philo)
 {
-	printf("%ld %d is thinking\n", philo->data->flow_time, philo->p_id + 1);
+	if (!philo->data->whois_die)
+		printf("%ld %d is thinking\n", philo->data->flow_time, philo->p_id + 1);
 }

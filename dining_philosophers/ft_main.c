@@ -90,8 +90,6 @@ int	main(int argc, char *argv[])
 //	while (!(share_data->whois_die) && share_data->is_eat_all != share_data->nop)
 //	{
 //	}
-	if (share_data->whois_die)
-		printf("%ld %d is died\n", share_data->flow_time, share_data->whois_die);
 	ft_free(share_data, thread);
 	return (0);
 }
