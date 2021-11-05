@@ -24,11 +24,11 @@ int	ft_init_mutex(t_data *share_data)
 	while (i < share_data->nop)
 	{
 		if (pthread_mutex_init(&(share_data->fork[i]), NULL) != 0)
-			return (2);
+			return (21 + i);
 		i++;
 	}
 	if (pthread_mutex_init(&share_data->mutex_eat_all, NULL) != 0)
-		return (2);
+		return (20);
 	return (0);
 }
 
@@ -48,29 +48,34 @@ int	ft_init_eating_table(t_data *share_data)
 	return (0);
 }
 
+void	ft_init_share_data(int argc, char *argv[], t_data *share_data)
+{
+	share_data->nop = atoi(argv[1]);
+	share_data->ttd = atoi(argv[2]);
+	share_data->tte = atoi(argv[3]);
+	share_data->tts = atoi(argv[4]);
+	if (argc == 6)
+		share_data->must_eat = atoi(argv[5]);
+	share_data->whois_die = 0;
+	share_data->is_eat_all = 0;
+	share_data->start_time = ft_get_time();
+}
+
 // nop, ttd, tte, tts, must_eat 초기화.
 int	ft_init(int argc, char *argv[], t_data **share_data, t_philo **philo)
 {
 	*share_data = malloc(sizeof(t_data));
 	if (share_data == NULL)
-		return (1);
-	(*share_data)->nop = atoi(argv[1]);
-	(*share_data)->ttd = atoi(argv[2]);
-	(*share_data)->tte = atoi(argv[3]);
-	(*share_data)->tts = atoi(argv[4]);
-	if (argc == 6)
-		(*share_data)->must_eat = atoi(argv[5]);
-	(*share_data)->whois_die = 0;
-	(*share_data)->is_eat_all = 0;
-	(*share_data)->start_time = ft_get_time();
+		return (11);
+	ft_init_share_data(argc, argv, *share_data);
 	(*share_data)->philo = malloc(sizeof(t_philo) * (*share_data)->nop);
 	if ((*share_data)->philo == NULL)
-		return (1);
+		return (12);
 	*philo = (*share_data)->philo;
 	(*share_data)->fork = malloc(sizeof(pthread_mutex_t) * (*share_data)->nop);
 	if ((*share_data)->fork == NULL)
-		return (1);
-	ft_init_eating_table(*share_data);
-	ft_init_mutex(*share_data);
-	return (0);
+		return (13);
+	if (ft_init_eating_table(*share_data) == 1)
+		return (14);
+	return (ft_init_mutex(*share_data));
 }

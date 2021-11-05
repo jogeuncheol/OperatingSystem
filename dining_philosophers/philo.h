@@ -48,5 +48,6 @@ void	*ft_scheduler(void *data);
 long	ft_get_time();
 void	ft_wsleep(int time_to);
 void	ft_free(t_data *share_data, pthread_t *thread);
+int		ft_error(t_data *share_data, int errno);
 
 #endif

@@ -49,7 +49,7 @@ int	ft_create_thread(t_data *share_data, t_philo *philo, pthread_t **pth)
 	if (thread == NULL)
 	{
 		printf("malloc error : ");
-		return (1);
+		return (15);
 	}
 	if (ft_create_scheduler(&thread[share_data->nop], share_data) != 0)
 		return (1);
@@ -62,7 +62,7 @@ int	ft_create_thread(t_data *share_data, t_philo *philo, pthread_t **pth)
 //		ft_init_philo(i, share_data, &philo[i]);
 		pth_id = pthread_create(&thread[i], NULL, ft_job, (void *)&philo[i]);
 		if (pth_id < 0)
-			return (1);
+			return (30);
 //		pthread_detach(thread[i]);
 //		usleep(0); // <--
 	}
@@ -82,14 +82,16 @@ int	main(int argc, char *argv[])
 		printf("Usage : ./philo number_of_philosophers time_to_die time_to_eat time_to_sleep [must_eat_all]\n");
 		return (1);
 	}
-	ft_init(argc, argv, &share_data, &philo);
+//	if (ft_arguments_validation(argc, argv) == 1)
+	{
+	}
+	ret = ft_init(argc, argv, &share_data, &philo);
+	if (ret != 0)		// malloc fail --> return (11 ~ 14), mutex_init fail --> return (20 + n)
+		return (ft_error(share_data, ret));
 	if (ft_create_thread(share_data, philo, &thread) == 1)
 	{
 //		ft_error();
 	}
-//	while (!(share_data->whois_die) && share_data->is_eat_all != share_data->nop)
-//	{
-//	}
 	ft_free(share_data, thread);
 	return (0);
 }
