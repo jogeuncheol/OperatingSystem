@@ -85,7 +85,7 @@ int	main(int argc, char *argv[])
 	if (argc < 5 || argc > 6)
 	{
 		printf("Usage : ./philo number_of_philosophers time_to_die"
-		"time_to_eat time_to_sleep [must_eat_all]\n");
+			"time_to_eat time_to_sleep [must_eat_all]\n");
 		return (1);
 	}
 	if (ft_arguments_validation(argc, argv) == 1)

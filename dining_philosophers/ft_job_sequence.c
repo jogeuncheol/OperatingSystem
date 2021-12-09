@@ -6,7 +6,7 @@ void	ft_take_fork(t_philo *philo)
 	pthread_mutex_lock(&(philo->data->fork[philo->R_fork]));
 	if (!philo->data->whois_die)
 		printf("%ld %d has taken a fork\n",
-		philo->data->flow_time, philo->p_id + 1);
+			philo->data->flow_time, philo->p_id + 1);
 }
 
 void	ft_eat(t_philo *philo)
