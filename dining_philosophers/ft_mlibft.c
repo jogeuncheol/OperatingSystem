@@ -3,7 +3,7 @@
 int	ft_space(char c)
 {
 	if (c == ' ' || c == '\n' || c == '\v' || c == '\t'
-			|| c == '\f' || c == '\r')
+		|| c == '\f' || c == '\r')
 		return (1);
 	return (0);
 }

@@ -17,7 +17,7 @@ typedef struct s_philo
 	long			flow_time;
 	long			is_die;
 	long			last_eat;
-	struct	s_data	*data;
+	struct s_data	*data;
 }	t_philo;
 
 typedef struct s_data

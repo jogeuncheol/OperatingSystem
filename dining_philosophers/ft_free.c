@@ -63,7 +63,7 @@ int	ft_error(t_data	*share_data, int errno)
 	if (errno > 20)
 		ft_mutex_destroy(share_data, errno);
 	else if (errno == 20 || errno == 15
-			|| errno == 16 || errno == 17 || errno == 30)
+		|| errno == 16 || errno == 17 || errno == 30)
 		ft_mutex_destroy(share_data, share_data->nop);
 	ft_free_share_data(share_data);
 	ft_err_message(errno);

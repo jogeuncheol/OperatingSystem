@@ -53,7 +53,7 @@ int	ft_create_thread(t_data *share_data, t_philo *philo, pthread_t **pth)
 	pthread_t	*thread;
 	int			pth_id;
 	long		i;
-	
+
 	thread = malloc(sizeof(pthread_t) * (share_data->nop + 1));
 	if (thread == NULL)
 		return (15);
@@ -85,7 +85,7 @@ int	main(int argc, char *argv[])
 	if (argc < 5 || argc > 6)
 	{
 		printf("Usage : ./philo number_of_philosophers time_to_die"
-				"time_to_eat time_to_sleep [must_eat_all]\n");
+		"time_to_eat time_to_sleep [must_eat_all]\n");
 		return (1);
 	}
 	if (ft_arguments_validation(argc, argv) == 1)

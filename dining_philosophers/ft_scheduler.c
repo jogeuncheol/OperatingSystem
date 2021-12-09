@@ -32,7 +32,7 @@ int	ft_died_check(t_data *share_data)
 	while (i < share_data->nop)
 	{
 		if (share_data->flow_time
-				- share_data->last_eat_table[i] > share_data->ttd)
+			- share_data->last_eat_table[i] > share_data->ttd)
 		{
 			printf("%ld %ld is died\n", share_data->flow_time, i + 1);
 			share_data->whois_die = i + 1;
