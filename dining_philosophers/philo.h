@@ -12,26 +12,26 @@ typedef struct s_philo
 	int		p_id;
 	int		L_fork;
 	int		R_fork;
-	int		is_eat;
-	int		is_eatAll;
-	int		flow_time;
-	int		is_die;
+	long	is_eat;
+	int		is_eat_done;
+	long	flow_time;
+	long	is_die;
 	long	last_eat;
 	struct	s_data *data;
 }	t_philo;
 
 typedef struct s_data
 {
-	int				nop;
-	int				ttd;
-	int				tte;
-	int				tts;
-	int				must_eat;
-	int				whois_die;
+	long			nop;
+	long			ttd;
+	long			tte;
+	long			tts;
+	long			must_eat;
+	long			whois_die;
 	long			start_time;
 	long			flow_time;
 	long			*last_eat_table;
-	int				is_eat_all;
+	long			is_eat_all;
 	pthread_mutex_t	mutex_eat_all;
 	pthread_mutex_t	*fork;
 	t_philo			*philo;
@@ -47,7 +47,12 @@ void	ft_think(t_philo *philo);
 void	*ft_scheduler(void *data);
 long	ft_get_time();
 void	ft_wsleep(int time_to);
-void	ft_free(t_data *share_data, pthread_t *thread);
+void	ft_pthread_detach(pthread_t *thread, int n);
+int		ft_free(t_data *share_data, pthread_t *thread);
 int		ft_error(t_data *share_data, int errno);
+int		ft_arguments_validation(int argc, char *argv[]);
+int		ft_sign_validation(t_data *share_data);
+int		ft_integer_validation(t_data *share_data);
+size_t	ft_atoi(const char *str);
 
 #endif

@@ -2,7 +2,11 @@
 
 void	ft_err_message(int errno)
 {
-	if (errno == 11)
+	if (errno == -10)
+		printf("argument error : some argument sign negative\n");
+	else if (errno == -11)
+		printf("argument error : some argument too big\n");
+	else if (errno == 11)
 		printf("malloc error : t_data *share_data\n");
 	else if (errno == 12)
 		printf("malloc error : t_philo *philo\n");
@@ -10,6 +14,8 @@ void	ft_err_message(int errno)
 		printf("malloc error : pthread_mutex_t *fork\n");
 	else if (errno == 14)
 		printf("malloc error : long *last_eat_table\n");
+	else if (errno == 15)
+		printf("malloc error : pthread *thread\n");
 	else if (errno == 20)
 		printf("pthread_mutex_init error : mutex_eat_all\n");
 	else
@@ -56,16 +62,16 @@ int	ft_error(t_data	*share_data, int errno)
 {
 	if (errno > 20)
 		ft_mutex_destroy(share_data, errno);
-	else if (errno == 20)
-		ft_mutex_desrtoy(share_data, share_data->nop);
+	else if (errno == 20 || errno == 15 || errno == 16 || errno == 17 || errno == 30)
+		ft_mutex_destroy(share_data, share_data->nop);
 	ft_free_share_data(share_data);
 	ft_err_message(errno);
 	return (errno);
 }
 
-void	ft_free(t_data *share_data, pthread_t *thread)
+int		ft_free(t_data *share_data, pthread_t *thread)
 {
-	int i;
+	long	i;
 
 	i = 0;
 	while (i < share_data->nop)
@@ -73,6 +79,7 @@ void	ft_free(t_data *share_data, pthread_t *thread)
 		pthread_mutex_destroy(&(share_data->fork[i]));
 		i++;
 	}
+	i = share_data->whois_die;
 	pthread_mutex_destroy(&share_data->mutex_eat_all);
 	free(share_data->fork);
 	share_data->fork = NULL;
@@ -84,4 +91,5 @@ void	ft_free(t_data *share_data, pthread_t *thread)
 	share_data = NULL;
 	free(thread);
 	thread = NULL;
+	return (i);
 }

@@ -9,33 +9,22 @@ void	*ft_job(void *data)
 	share_data = philo->data;
 	while (!share_data->whois_die && share_data->is_eat_all != share_data->nop)
 	{
-		if (philo->is_eat_done == 1)
-			break ;
 		ft_take_fork(philo);
 		ft_eat(philo);
 		ft_drop_fork(philo);
 		ft_sleep(philo);
 		ft_think(philo);
 	}
-//	printf(" === %d thread end === \n", philo->p_id + 1);
 	return (NULL);
 }
 
-int		ft_join_thread(pthread_t *thread, int nop)
+void	ft_join_thread(pthread_t *thread, int nop)
 {
 	int	i;
 
 	i = 0;
 	while (i < nop + 1)
-	{
-		if (pthread_join(thread[i], NULL) != 0)
-		{
-			ft_pthread_detach(thread, i + 1);
-			return (16);
-		}
-		i++;
-	}
-	return (0);
+		pthread_join(thread[i++], NULL);
 }
 
 int	ft_create_scheduler(pthread_t *thread, t_data *share_data)
@@ -54,27 +43,31 @@ int	ft_create_thread(t_data *share_data, t_philo *philo, pthread_t **pth)
 {
 	pthread_t	*thread;
 	int			pth_id;
-	long		i;
+	int			i;
 	
 	thread = malloc(sizeof(pthread_t) * (share_data->nop + 1));
 	if (thread == NULL)
+	{
+		printf("malloc error : ");
 		return (15);
+	}
 	if (ft_create_scheduler(&thread[share_data->nop], share_data) != 0)
-		return (16);
+		return (1);
 	i = -1;
 	while (++i < share_data->nop)
 		ft_init_philo(i, share_data, &philo[i]);
 	i = -1;
 	while (++i < share_data->nop)
 	{
+//		ft_init_philo(i, share_data, &philo[i]);
 		pth_id = pthread_create(&thread[i], NULL, ft_job, (void *)&philo[i]);
 		if (pth_id < 0)
 			return (30);
+//		pthread_detach(thread[i]);
 //		usleep(0); // <--
 	}
 	*pth = thread;
-	if (ft_join_thread(thread, share_data->nop))
-		return (17);
+	ft_join_thread(thread, share_data->nop);
 	return (0);
 }
 
@@ -92,14 +85,16 @@ int	main(int argc, char *argv[])
 	}
 	if (ft_arguments_validation(argc, argv) == 1)
 	{
-		printf("Wrong arguments : Check arguments\n");
+		printf("wrong arguments : check arguments\n");
 		return (1);
 	}
 	ret = ft_init(argc, argv, &share_data, &philo);
 	if (ret != 0)		// malloc fail --> return (11 ~ 14), mutex_init fail --> return (20 + n)
 		return (ft_error(share_data, ret));
-	ret = ft_create_thread(share_data, philo, &thread);
-	if (ret != 0)
-		return (ft_error(share_data, ret));
-	return (ft_free(share_data, thread));
+	if (ft_create_thread(share_data, philo, &thread) == 1)
+	{
+//		ft_error();
+	}
+	ft_free(share_data, thread);
+	return (0);
 }

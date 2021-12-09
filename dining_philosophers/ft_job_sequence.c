@@ -29,16 +29,20 @@ void	ft_eat(t_philo *philo)
 			return ;
 		}
 		usleep(philo->data->tte / 2);
+//		printf(" === eat seq === %ld data_flow_time - last_eat\n", philo->data->flow_time - philo->last_eat);
 	}
 //	usleep(philo->data->tte * 1000);
 //	share_data->last_eat_table[philo->p_id] += share_data->flow_time - share_data->tte;
 	philo->is_eat++;
+	pthread_mutex_lock(&philo->data->mutex_eat_all);
 	if (philo->data->must_eat > 0 && philo->is_eat == philo->data->must_eat)
 	{
-		pthread_mutex_lock(&philo->data->mutex_eat_all);
+//		pthread_mutex_lock(&philo->data->mutex_eat_all);
 		philo->data->is_eat_all++;
-		pthread_mutex_unlock(&philo->data->mutex_eat_all);
+		philo->is_eat_done = 1;
+//		pthread_mutex_unlock(&philo->data->mutex_eat_all);
 	}
+	pthread_mutex_unlock(&philo->data->mutex_eat_all);
 }
 
 void	ft_drop_fork(t_philo *philo)

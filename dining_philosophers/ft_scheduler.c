@@ -26,14 +26,14 @@ void	ft_wsleep(int time_to)
 
 int		ft_died_check(t_data *share_data)
 {
-	int i;
+	long	i;
 
 	i = 0;
 	while (i < share_data->nop)
 	{
 		if (share_data->flow_time - share_data->last_eat_table[i] > share_data->ttd)
 		{
-			printf("%ld %d is died\n", share_data->flow_time, i + 1);
+			printf("%ld %ld is died\n", share_data->flow_time, i + 1);
 			share_data->whois_die = i + 1;
 			return (1);
 		}

@@ -6,9 +6,9 @@ void	ft_init_philo(int i, t_data *share_data, t_philo *philo)
 	philo->L_fork = i;
 	philo->R_fork = (i + 1) % share_data->nop;
 	if (share_data->must_eat > 0)
-		philo->is_eatAll = 0;
+		philo->is_eat_done = 0;
 	else
-		philo->is_eatAll = -1;
+		philo->is_eat_done = -1;
 	philo->is_eat = 0;
 	philo->is_die = 0;
 	philo->flow_time = 0;
@@ -18,7 +18,7 @@ void	ft_init_philo(int i, t_data *share_data, t_philo *philo)
 
 int	ft_init_mutex(t_data *share_data)
 {
-	int i;
+	long	i;
 
 	i = 0;
 	while (i < share_data->nop)
@@ -34,7 +34,7 @@ int	ft_init_mutex(t_data *share_data)
 
 int	ft_init_eating_table(t_data *share_data)
 {
-	int i;
+	long	i;
 
 	share_data->last_eat_table = malloc(sizeof(long) * share_data->nop);
 	if (share_data->last_eat_table == NULL)
@@ -50,15 +50,20 @@ int	ft_init_eating_table(t_data *share_data)
 
 void	ft_init_share_data(int argc, char *argv[], t_data *share_data)
 {
-	share_data->nop = atoi(argv[1]);
-	share_data->ttd = atoi(argv[2]);
-	share_data->tte = atoi(argv[3]);
-	share_data->tts = atoi(argv[4]);
+	share_data->nop = ft_atoi(argv[1]);
+	share_data->ttd = ft_atoi(argv[2]);
+	share_data->tte = ft_atoi(argv[3]);
+	share_data->tts = ft_atoi(argv[4]);
 	if (argc == 6)
-		share_data->must_eat = atoi(argv[5]);
+		share_data->must_eat = ft_atoi(argv[5]);
+	else
+		share_data->must_eat = -1;
 	share_data->whois_die = 0;
 	share_data->is_eat_all = 0;
 	share_data->start_time = ft_get_time();
+	share_data->philo = NULL;
+	share_data->fork = NULL;
+	share_data->last_eat_table = NULL;
 }
 
 // nop, ttd, tte, tts, must_eat 초기화.
@@ -68,6 +73,10 @@ int	ft_init(int argc, char *argv[], t_data **share_data, t_philo **philo)
 	if (share_data == NULL)
 		return (11);
 	ft_init_share_data(argc, argv, *share_data);
+	if (ft_sign_validation(*share_data) == 1)
+		return (-10);
+	if (ft_integer_validation(*share_data) == 1)
+		return (-11);
 	(*share_data)->philo = malloc(sizeof(t_philo) * (*share_data)->nop);
 	if ((*share_data)->philo == NULL)
 		return (12);
