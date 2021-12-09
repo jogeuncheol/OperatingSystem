@@ -2,7 +2,7 @@
 
 void	ft_pthread_detach(pthread_t *thread, int n)
 {
-	int i;
+	int		i;
 
 	i = 0;
 	while (i < n)
@@ -11,5 +11,3 @@ void	ft_pthread_detach(pthread_t *thread, int n)
 		i++;
 	}
 }
-
-int	ft_create_error();

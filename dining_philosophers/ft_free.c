@@ -48,7 +48,7 @@ void	ft_free_share_data(t_data *share_data)
 
 void	ft_mutex_destroy(t_data *share_data, int errno)
 {
-	int i;
+	int		i;
 
 	i = 0;
 	while (i < errno - 21)
@@ -62,14 +62,15 @@ int	ft_error(t_data	*share_data, int errno)
 {
 	if (errno > 20)
 		ft_mutex_destroy(share_data, errno);
-	else if (errno == 20 || errno == 15 || errno == 16 || errno == 17 || errno == 30)
+	else if (errno == 20 || errno == 15
+			|| errno == 16 || errno == 17 || errno == 30)
 		ft_mutex_destroy(share_data, share_data->nop);
 	ft_free_share_data(share_data);
 	ft_err_message(errno);
 	return (errno);
 }
 
-int		ft_free(t_data *share_data, pthread_t *thread)
+int	ft_free(t_data *share_data, pthread_t *thread)
 {
 	long	i;
 

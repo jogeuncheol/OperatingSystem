@@ -1,6 +1,6 @@
 #include "philo.h"
 
-long	ft_get_time()
+long	ft_get_time(void)
 {
 	struct timeval	time;
 
@@ -14,7 +14,7 @@ long	ft_get_time()
 
 void	ft_wsleep(int time_to)
 {
-	int i;
+	int		i;
 
 	i = 0;
 	while (i < time_to)
@@ -24,14 +24,15 @@ void	ft_wsleep(int time_to)
 	}
 }
 
-int		ft_died_check(t_data *share_data)
+int	ft_died_check(t_data *share_data)
 {
 	long	i;
 
 	i = 0;
 	while (i < share_data->nop)
 	{
-		if (share_data->flow_time - share_data->last_eat_table[i] > share_data->ttd)
+		if (share_data->flow_time
+				- share_data->last_eat_table[i] > share_data->ttd)
 		{
 			printf("%ld %ld is died\n", share_data->flow_time, i + 1);
 			share_data->whois_die = i + 1;
@@ -56,6 +57,5 @@ void	*ft_scheduler(void *data)
 		if (ft_died_check(share_data))
 			break ;
 	}
-//	share_data->whois_die = 1; // <-- need check
 	return (NULL);
 }

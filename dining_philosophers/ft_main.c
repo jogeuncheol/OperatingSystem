@@ -17,11 +17,10 @@ void	*ft_job(void *data)
 		ft_sleep(philo);
 		ft_think(philo);
 	}
-//	printf(" === %d thread end === \n", philo->p_id + 1);
 	return (NULL);
 }
 
-int		ft_join_thread(pthread_t *thread, int nop)
+int	ft_join_thread(pthread_t *thread, int nop)
 {
 	int	i;
 
@@ -45,7 +44,6 @@ int	ft_create_scheduler(pthread_t *thread, t_data *share_data)
 	pth_id = pthread_create(thread, NULL, ft_scheduler, (void *)share_data);
 	if (pth_id < 0)
 		return (1);
-//	pthread_join(*thread, NULL);
 	share_data->start_time = ft_get_time();
 	return (0);
 }
@@ -70,7 +68,6 @@ int	ft_create_thread(t_data *share_data, t_philo *philo, pthread_t **pth)
 		pth_id = pthread_create(&thread[i], NULL, ft_job, (void *)&philo[i]);
 		if (pth_id < 0)
 			return (30);
-//		usleep(0); // <--
 	}
 	*pth = thread;
 	if (ft_join_thread(thread, share_data->nop))
@@ -87,7 +84,8 @@ int	main(int argc, char *argv[])
 
 	if (argc < 5 || argc > 6)
 	{
-		printf("Usage : ./philo number_of_philosophers time_to_die time_to_eat time_to_sleep [must_eat_all]\n");
+		printf("Usage : ./philo number_of_philosophers time_to_die"
+				"time_to_eat time_to_sleep [must_eat_all]\n");
 		return (1);
 	}
 	if (ft_arguments_validation(argc, argv) == 1)
@@ -96,7 +94,7 @@ int	main(int argc, char *argv[])
 		return (1);
 	}
 	ret = ft_init(argc, argv, &share_data, &philo);
-	if (ret != 0)		// malloc fail --> return (11 ~ 14), mutex_init fail --> return (20 + n)
+	if (ret != 0)
 		return (ft_error(share_data, ret));
 	ret = ft_create_thread(share_data, philo, &thread);
 	if (ret != 0)

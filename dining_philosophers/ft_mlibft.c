@@ -1,17 +1,17 @@
 #include "philo.h"
 
-int		ft_space(char c)
+int	ft_space(char c)
 {
-	if (c == ' ' || c == '\n' || c == '\v' || c == '\t' ||
-			c == '\f' || c == '\r')
+	if (c == ' ' || c == '\n' || c == '\v' || c == '\t'
+			|| c == '\f' || c == '\r')
 		return (1);
 	return (0);
 }
 
-size_t	ft_atoi(const char *str)
+long	ft_atoi(const char *str)
 {
 	int		sign;
-	size_t	result;
+	long	result;
 
 	sign = 1;
 	result = 0;

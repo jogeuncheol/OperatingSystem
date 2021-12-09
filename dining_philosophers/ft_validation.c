@@ -9,8 +9,8 @@ int	ft_is_digit(char c)
 
 int	ft_arguments_validation(int argc, char *argv[])
 {
-	int i;
-	int j;
+	int		i;
+	int		j;
 
 	i = 1;
 	while (i < argc)
